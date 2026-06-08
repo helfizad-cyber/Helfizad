@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFA Insights (B) — Modest Fashion Purchase Submission</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #6B1E2E;
+    --burgundy-dark: #4A1020;
+    --burgundy-light: #8B2E42;
+    --burgundy-pale: #F5ECEE;
+    --forest: #2C5F3E;
+    --forest-dark: #1E4229;
+    --forest-light: #3D7A52;
+    --forest-pale: #EAF2ED;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --cream: #FAF8F5;
+    --white: #FFFFFF;
+    --grey-100: #F4F4F4;
+    --grey-300: #D0D0D0;
+    --grey-500: #8A8A8A;
+    --grey-700: #444444;
+    --grey-900: #1A1A1A;
+    --shadow-sm: 0 2px 8px rgba(107,30,46,0.08);
+    --shadow-md: 0 6px 24px rgba(107,30,46,0.12);
+    --shadow-lg: 0 16px 48px rgba(107,30,46,0.16);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--grey-900);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 10%, rgba(107,30,46,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 90%, rgba(44,95,62,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .org-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--burgundy);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .org-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--burgundy-dark);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .header h1 span {
+    color: var(--forest);
+    font-style: italic;
+  }
+
+  .header p {
+    color: var(--grey-500);
+    font-size: 14px;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .divider-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .divider-line::before, .divider-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--burgundy-light), transparent);
+    opacity: 0.3;
+  }
+  .divider-line span {
+    font-size: 16px;
+    color: var(--gold);
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+  .progress-step {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--grey-300);
+    transition: background 0.4s ease;
+  }
+  .progress-step.active { background: var(--burgundy); }
+  .progress-step.done { background: var(--forest); }
+
+  .step-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--grey-500);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .step-label span.active-label { color: var(--burgundy); font-weight: 600; }
+
+  /* ── CARD ── */
+  .form-card {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid rgba(107,30,46,0.08);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 30px;
+    border-bottom: 1px solid var(--grey-100);
+    background: linear-gradient(135deg, var(--burgundy-pale) 0%, var(--white) 100%);
+  }
+
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-icon.burgundy { background: var(--burgundy); }
+  .section-icon.forest { background: var(--forest); }
+  .section-icon.gold { background: var(--gold); }
+
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--burgundy-dark);
+  }
+  .section-header p {
+    font-size: 12px;
+    color: var(--grey-500);
+    margin-top: 2px;
+  }
+
+  .form-body { padding: 28px 30px; }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .field-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .field-full { grid-column: 1 / -1; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--grey-700);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  label .req {
+    color: var(--burgundy);
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  label .opt {
+    color: var(--grey-500);
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    background: var(--grey-100);
+    padding: 1px 7px;
+    border-radius: 20px;
+  }
+
+  input, select, textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--grey-900);
+    background: var(--cream);
+    border: 1.5px solid var(--grey-300);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--burgundy);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(107,30,46,0.08);
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--grey-300); }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B1E2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  .currency-input {
+    position: relative;
+  }
+  .currency-input span {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--burgundy);
+    pointer-events: none;
+  }
+  .currency-input input { padding-left: 42px; }
+
+  /* Upload area */
+  .upload-area {
+    border: 2px dashed var(--grey-300);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .upload-area:hover {
+    border-color: var(--burgundy);
+    background: var(--burgundy-pale);
+  }
+  .upload-area input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .upload-icon { font-size: 32px; margin-bottom: 10px; }
+  .upload-area h3 { font-size: 14px; font-weight: 600; color: var(--burgundy); margin-bottom: 4px; }
+  .upload-area p { font-size: 12px; color: var(--grey-500); }
+  .upload-area .file-types {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .upload-area .file-types span {
+    background: var(--white);
+    border: 1px solid var(--grey-300);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--grey-500);
+    padding: 2px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  #file-preview { margin-top: 14px; }
+  .file-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--forest-pale);
+    border: 1px solid var(--forest-light);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--forest-dark);
+    font-weight: 500;
+  }
+
+  /* Section separator */
+  .section-gap { height: 20px; }
+
+  /* Status badge */
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: var(--forest-pale);
+    border: 1px solid rgba(44,95,62,0.2);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+  }
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .status-row p {
+    font-size: 12px;
+    color: var(--forest-dark);
+    font-weight: 500;
+  }
+  .status-row p strong { color: var(--forest); }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-section {
+    padding: 24px 30px;
+    background: var(--burgundy-pale);
+    border-top: 1px solid rgba(107,30,46,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .submit-info {
+    font-size: 12px;
+    color: var(--grey-500);
+    line-height: 1.5;
+    max-width: 340px;
+  }
+  .submit-info strong { color: var(--burgundy); }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--burgundy);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(107,30,46,0.25);
+  }
+  .btn-submit:hover {
+    background: var(--burgundy-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(107,30,46,0.35);
+  }
+  .btn-submit:active { transform: translateY(0); }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 30px;
+  }
+  .success-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 24px rgba(44,95,62,0.3);
+  }
+  .success-screen h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: var(--forest-dark);
+    margin-bottom: 10px;
+  }
+  .success-screen p { color: var(--grey-500); font-size: 14px; line-height: 1.7; max-width: 400px; margin: 0 auto; }
+  .ref-box {
+    display: inline-block;
+    background: var(--cream);
+    border: 1px solid var(--grey-300);
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
+    margin: 20px 0;
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--burgundy);
+    letter-spacing: 1px;
+  }
+  .approval-note {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--forest-pale);
+    border: 1px solid rgba(44,95,62,0.2);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-top: 20px;
+    text-align: left;
+  }
+  .approval-note span { font-size: 24px; flex-shrink: 0; }
+  .approval-note p { font-size: 13px; color: var(--forest-dark); line-height: 1.5; }
+  .approval-note strong { display: block; margin-bottom: 2px; }
+
+  /* ── ADMIN PANEL ── */
+  .admin-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--grey-500);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .admin-toggle:hover { color: var(--burgundy); }
+
+  .admin-panel {
+    display: none;
+    margin-top: 24px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(107,30,46,0.08);
+    overflow: hidden;
+  }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: var(--burgundy);
+    color: white;
+  }
+  .admin-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .admin-header p { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--grey-100);
+    border-bottom: 1px solid var(--grey-100);
+  }
+  .stat-box {
+    background: var(--white);
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .stat-box .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--burgundy-dark);
+  }
+  .stat-box .lbl { font-size: 11px; color: var(--grey-500); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .submissions-table { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--cream);
+    color: var(--grey-500);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--grey-100);
+  }
+  td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--grey-100);
+    color: var(--grey-700);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--cream); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge.pending { background: #FFF3CD; color: #856404; }
+  .badge.approved { background: var(--forest-pale); color: var(--forest-dark); }
+  .badge.rejected { background: var(--burgundy-pale); color: var(--burgundy-dark); }
+
+  .action-btns { display: flex; gap: 6px; }
+  .btn-sm {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-approve { background: var(--forest-pale); color: var(--forest-dark); }
+  .btn-approve:hover { background: var(--forest); color: white; }
+  .btn-reject { background: var(--burgundy-pale); color: var(--burgundy-dark); }
+  .btn-reject:hover { background: var(--burgundy); color: white; }
+  .btn-view { background: var(--grey-100); color: var(--grey-700); }
+  .btn-view:hover { background: var(--grey-300); }
+
+  .empty-state {
+    padding: 40px;
+    text-align: center;
+    color: var(--grey-500);
+    font-size: 13px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 11px;
+    color: var(--grey-500);
+    line-height: 1.6;
+  }
+  .footer strong { color: var(--burgundy); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .modal-head {
+    padding: 20px 24px;
+    background: var(--burgundy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-head h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+  .modal-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; opacity: 0.7; }
+  .modal-close:hover { opacity: 1; }
+  .modal-body { padding: 24px; }
+  .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--grey-100); font-size: 13px; }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row .key { color: var(--grey-500); font-weight: 500; }
+  .detail-row .val { color: var(--grey-900); font-weight: 600; text-align: right; max-width: 60%; }
+  .modal-footer { padding: 16px 24px; background: var(--cream); display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-primary { background: var(--forest); color: white; border: none; border-radius: 6px; padding: 10px 22px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-secondary { background: none; color: var(--burgundy); border: 1.5px solid var(--burgundy); border-radius: 6px; padding: 10px 22px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  @media (max-width: 600px) {
+    .field-grid, .field-grid.three { grid-template-columns: 1fr; }
+    .submit-section { flex-direction: column; align-items: stretch; }
+    .admin-stats { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="org-badge">MFA Insights (B) Sdn Bhd</div>
+    <h1>Modest Fashion<br><span>Purchase Receipt Submission</span></h1>
+    <p>Submit all purchase receipts for processing and approval by the Executive Secretary. Ensure all fields are accurately completed before submission.</p>
+    <div class="divider-line"><span>✦</span></div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-step active" id="ps1"></div>
+    <div class="progress-step" id="ps2"></div>
+    <div class="progress-step" id="ps3"></div>
+    <div class="progress-step" id="ps4"></div>
+  </div>
+  <div class="step-label" id="stepLabel">
+    <span class="active-label">Staff Details</span>
+    <span>Purchase Info</span>
+    <span>Financials</span>
+    <span>Receipt Upload</span>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card" id="formCard">
+
+    <!-- SECTION 1: STAFF & SUBMITTER -->
+    <div class="section-header">
+      <div class="section-icon burgundy">👤</div>
+      <div>
+        <h2>Section 1 — Staff Details</h2>
+        <p>Submitter information and purchase authority</p>
+      </div>
+    </div>
+    <div class="form-body">
+      <div class="field-grid">
+        <div class="field">
+          <label>Staff Name <span class="req">*</span></label>
+          <input type="text" id="staffName" placeholder="Full name as per ID" oninput="updateProgress()">
+        </div>
+        <div class="field">
+          <label>Staff ID / Position <span class="req">*</span></label>
+          <input type="text" id="staffId" placeholder="e.g. MFA-BN-005 / Coordinator">
+        </div>
+        <div class="field">
+          <label>Department <span class="req">*</span></label>
+          <select id="department" onchange="updateProgress()">
+            <option value="">Select department</option>
+            <option>Modest Fashion — Design & Sourcing</option>
+            <option>Modest Fashion — Operations</option>
+            <option>Modest Fashion — Marketing</option>
+            <option>Modest Fashion — Sales & Retail</option>
+            <option>Administration</option>
+            <option>Finance</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Submission Date <span class="req">*</span></label>
+          <input type="date" id="submissionDate" oninput="updateProgress()">
+        </div>
+        <div class="field">
+          <label>Approving Officer <span class="req">*</span></label>
+          <input type="text" id="approverName" placeholder="Name of authorising officer">
+        </div>
+        <div class="field">
+          <label>Contact / Email <span class="req">*</span></label>
+          <input type="email" id="staffEmail" placeholder="your@mfainsights.com.bn">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- SECTION 2: PURCHASE DETAILS -->
+    <div class="section-header">
+      <div class="section-icon forest">🛍️</div>
+      <div>
+        <h2>Section 2 — Purchase Details</h2>
+        <p>Vendor, items, and order reference information</p>
+      </div>
+    </div>
+    <div class="form-body">
+      <div class="field-grid">
+        <div class="field">
+          <label>Purchase Order Ref <span class="req">*</span></label>
+          <input type="text" id="poRef" placeholder="e.g. PO-MF-2026-001">
+        </div>
+        <div class="field">
+          <label>Purchase Date <span class="req">*</span></label>
+          <input type="date" id="purchaseDate" oninput="updateProgress()">
+        </div>
+        <div class="field field-full">
+          <label>Vendor / Supplier Name <span class="req">*</span></label>
+          <input type="text" id="vendorName" placeholder="Full supplier or store name">
+        </div>
+        <div class="field">
+          <label>Supplier Contact <span class="opt">Optional</span></label>
+          <input type="text" id="supplierContact" placeholder="Phone or email">
+        </div>
+        <div class="field">
+          <label>Purchase Category <span class="req">*</span></label>
+          <select id="category" onchange="updateProgress()">
+            <option value="">Select category</option>
+            <option>Fabric & Materials</option>
+            <option>Accessories & Trimmings</option>
+            <option>Packaging & Labelling</option>
+            <option>Equipment & Tools</option>
+            <option>Marketing & Collaterals</option>
+            <option>Logistics & Delivery</option>
+            <option>Office & Admin Supplies</option>
+            <option>Event & Display</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label>Item Description <span class="req">*</span></label>
+          <textarea id="itemDesc" placeholder="Describe the item(s) purchased — include specifications, quantity, colour, size, or any relevant details." oninput="updateProgress()"></textarea>
+        </div>
+        <div class="field">
+          <label>Expected Delivery Date <span class="req">*</span></label>
+          <input type="date" id="deliveryDate">
+        </div>
+        <div class="field">
+          <label>Delivery Method <span class="opt">Optional</span></label>
+          <select id="deliveryMethod">
+            <option value="">Select method</option>
+            <option>Self-Collect</option>
+            <option>Supplier Delivery</option>
+            <option>Courier / Pos Brunei</option>
+            <option>Cross-border Shipping</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- SECTION 3: FINANCIALS -->
+    <div class="section-header">
+      <div class="section-icon gold">💰</div>
+      <div>
+        <h2>Section 3 — Financial Details</h2>
+        <p>Amount, currency, and payment method</p>
+      </div>
+    </div>
+    <div class="form-body">
+      <div class="field-grid three">
+        <div class="field">
+          <label>Currency <span class="req">*</span></label>
+          <select id="currency" onchange="updateProgress()">
+            <option value="">Select</option>
+            <option value="BND">BND — Brunei Dollar</option>
+            <option value="SGD">SGD — Singapore Dollar</option>
+            <option value="MYR">MYR — Malaysian Ringgit</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="AED">AED — UAE Dirham</option>
+            <option value="IDR">IDR — Indonesian Rupiah</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Amount <span class="req">*</span></label>
+          <div class="currency-input">
+            <span id="currencySymbol">$</span>
+            <input type="number" id="amount" placeholder="0.00" step="0.01" min="0" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="field">
+          <label>Payment Method <span class="req">*</span></label>
+          <select id="paymentMethod" onchange="updateProgress()">
+            <option value="">Select</option>
+            <option>Cash</option>
+            <option>Company Debit Card</option>
+            <option>Company Credit Card</option>
+            <option>Personal (Reimburse)</option>
+            <option>Bank Transfer</option>
+            <option>Online Payment (QR / E-Wallet)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-grid" style="margin-top:18px;">
+        <div class="field">
+          <label>Tax / GST <span class="opt">If applicable</span></label>
+          <div class="currency-input">
+            <span id="taxSymbol">$</span>
+            <input type="number" id="taxAmount" placeholder="0.00" step="0.01" min="0">
+          </div>
+        </div>
+        <div class="field">
+          <label>Total (incl. Tax)</label>
+          <div class="currency-input">
+            <span id="totalSymbol">$</span>
+            <input type="number" id="totalAmount" placeholder="Auto-calculated" step="0.01" min="0" style="background:#f0f0f0; color:#888;" readonly>
+          </div>
+        </div>
+        <div class="field field-full">
+          <label>Additional Notes <span class="opt">Optional</span></label>
+          <textarea id="notes" placeholder="Any additional context, special instructions, or remarks for the Executive Secretary…"></textarea>
+        </div>
+      </div>
+
+      <!-- Approval routing note -->
+      <div class="status-row" style="margin-top:18px;">
+        <div class="status-dot"></div>
+        <p>Upon submission, this form will be <strong>routed to the Executive Secretary</strong> for review and approval. You will be notified once a decision has been made.</p>
+      </div>
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- SECTION 4: RECEIPT UPLOAD -->
+    <div class="section-header">
+      <div class="section-icon burgundy">📎</div>
+      <div>
+        <h2>Section 4 — Receipt Upload</h2>
+        <p>Attach the original receipt or invoice for verification</p>
+      </div>
+    </div>
+    <div class="form-body">
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="receiptFile" accept=".jpg,.jpeg,.png,.pdf,.heic" onchange="handleFileUpload(event)">
+        <div class="upload-icon">📄</div>
+        <h3>Upload Receipt / Invoice</h3>
+        <p>Drag and drop, or click to browse your files</p>
+        <div class="file-types">
+          <span>JPG</span><span>PNG</span><span>PDF</span><span>HEIC</span>
+        </div>
+      </div>
+      <div id="file-preview"></div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section">
+      <div class="submit-info">
+        By submitting, you confirm that all information provided is <strong>accurate and complete</strong>. The Executive Secretary will be notified immediately upon receipt.
+      </div>
+      <button class="btn-submit" onclick="submitForm()">
+        Submit for Approval →
+      </button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">✓</div>
+      <h2>Submission Received</h2>
+      <p>Your purchase receipt has been successfully submitted. The Executive Secretary has been notified and will review your submission shortly.</p>
+      <div class="ref-box" id="refNumber">REF: MFA-MF-2026-001</div>
+      <div class="approval-note">
+        <span>📋</span>
+        <p>
+          <strong>Pending Executive Secretary Approval</strong>
+          This submission is currently under review. You will receive a notification via email once approved or if further information is required.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- end form-card -->
+
+  <!-- ADMIN TOGGLE -->
+  <a class="admin-toggle" href="#" onclick="toggleAdmin(event)">
+    🔒 Executive Secretary — Admin Dashboard
+  </a>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <div>
+        <h3>Purchase Submissions — Admin View</h3>
+        <p>Modest Fashion Division · MFA Insights (B) Sdn Bhd</p>
+      </div>
+      <span style="font-size:24px;">📊</span>
+    </div>
+
+    <div class="admin-stats" id="adminStats">
+      <div class="stat-box"><div class="val" id="statTotal">0</div><div class="lbl">Total Submitted</div></div>
+      <div class="stat-box"><div class="val" id="statPending" style="color:var(--gold)">0</div><div class="lbl">Pending Review</div></div>
+      <div class="stat-box"><div class="val" id="statApproved" style="color:var(--forest)">0</div><div class="lbl">Approved</div></div>
+      <div class="stat-box"><div class="val" id="statAmount" style="font-size:18px;">BND 0</div><div class="lbl">Total Value</div></div>
+    </div>
+
+    <div class="submissions-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Ref No.</th>
+            <th>Staff</th>
+            <th>Vendor</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="submissionsBody">
+          <tr>
+            <td colspan="8" class="empty-state">No submissions yet. Awaiting staff entries.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><strong>MFA Insights (B) Sdn Bhd</strong> · Modest Fashion Division</p>
+    <p>For assistance, contact the Executive Secretary · All submissions are logged and auditable</p>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Submission Detail</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="rejectFromModal()">Reject</button>
+      <button class="btn-primary" onclick="approveFromModal()">Approve</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── STATE ──
+  let submissions = JSON.parse(localStorage.getItem('mfa_mf_submissions') || '[]');
+  let currentModalIndex = null;
+  let refCounter = submissions.length + 1;
+
+  // ── INIT ──
+  document.getElementById('submissionDate').value = new Date().toISOString().split('T')[0];
+  renderTable();
+  updateStats();
+
+  // ── CURRENCY SYMBOLS ──
+  const symbols = { BND:'B$', SGD:'S$', MYR:'RM ', USD:'US$', AED:'AED ', IDR:'Rp ' };
+  document.getElementById('currency').addEventListener('change', function() {
+    const sym = symbols[this.value] || '$';
+    document.getElementById('currencySymbol').textContent = sym;
+    document.getElementById('taxSymbol').textContent = sym;
+    document.getElementById('totalSymbol').textContent = sym;
+  });
+
+  // ── AUTO-CALC TOTAL ──
+  ['amount','taxAmount'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      const a = parseFloat(document.getElementById('amount').value) || 0;
+      const t = parseFloat(document.getElementById('taxAmount').value) || 0;
+      document.getElementById('totalAmount').value = (a + t).toFixed(2);
+    });
+  });
+
+  // ── PROGRESS ──
+  function updateProgress() {
+    const filled = [
+      document.getElementById('staffName').value,
+      document.getElementById('department').value,
+      document.getElementById('submissionDate').value,
+      document.getElementById('purchaseDate').value,
+      document.getElementById('category').value,
+      document.getElementById('itemDesc').value,
+      document.getElementById('currency').value,
+      document.getElementById('amount').value,
+      document.getElementById('paymentMethod').value,
+    ].filter(v => v.trim()).length;
+
+    const steps = ['ps1','ps2','ps3','ps4'];
+    const thresholds = [0, 3, 6, 8];
+    steps.forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.className = 'progress-step';
+      if (filled > thresholds[i+1 < 4 ? i+1 : i]) el.classList.add('done');
+      else if (filled >= thresholds[i]) el.classList.add('active');
+    });
+  }
+
+  // ── FILE UPLOAD ──
+  function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = document.getElementById('file-preview');
+    preview.innerHTML = `<div class="file-chip">📎 ${file.name} (${(file.size/1024).toFixed(1)} KB)</div>`;
+    document.getElementById('uploadArea').style.borderColor = 'var(--forest)';
+    document.getElementById('uploadArea').style.background = 'var(--forest-pale)';
+  }
+
+  // ── APPS SCRIPT ENDPOINT — REPLACE WITH YOUR DEPLOYED URL ──
+  const APPS_SCRIPT_URL = "https://script.google.com/a/macros/mfainsights.com/s/AKfycbwEYX3a2NPFK9r3JEgCCyWEDQzP5eLhDJoUBfhDdoV1UhPXOAIuxmiG9fRGdHbDXcU6/exec";
+
+  // ── SUBMIT ──
+  async function submitForm() {
+    const required = ['staffName','staffId','department','submissionDate','staffEmail','approverName','poRef','purchaseDate','vendorName','category','itemDesc','deliveryDate','currency','amount','paymentMethod'];
+    const missing = required.filter(id => !document.getElementById(id).value.trim());
+
+    if (missing.length) {
+      alert('Please complete all required fields before submitting.');
+      document.getElementById(missing[0]).focus();
+      return;
+    }
+
+    // Disable button & show loading
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    const currency = document.getElementById('currency').value;
+    const payload = {
+      staffName:       document.getElementById('staffName').value,
+      staffId:         document.getElementById('staffId').value,
+      department:      document.getElementById('department').value,
+      staffEmail:      document.getElementById('staffEmail').value,
+      approver:        document.getElementById('approverName').value,
+      submissionDate:  document.getElementById('submissionDate').value,
+      poRef:           document.getElementById('poRef').value,
+      purchaseDate:    document.getElementById('purchaseDate').value,
+      vendorName:      document.getElementById('vendorName').value,
+      supplierContact: document.getElementById('supplierContact').value,
+      category:        document.getElementById('category').value,
+      itemDesc:        document.getElementById('itemDesc').value,
+      deliveryDate:    document.getElementById('deliveryDate').value,
+      deliveryMethod:  document.getElementById('deliveryMethod').value,
+      currency:        currency,
+      amount:          parseFloat(document.getElementById('amount').value) || 0,
+      tax:             parseFloat(document.getElementById('taxAmount').value) || 0,
+      total:           parseFloat(document.getElementById('totalAmount').value) || 0,
+      paymentMethod:   document.getElementById('paymentMethod').value,
+      receiptFilename: document.getElementById('receiptFile').files[0]?.name || 'No file attached',
+      notes:           document.getElementById('notes').value,
+    };
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        // Also persist locally for the admin dashboard view
+        const sym = symbols[currency] || '$';
+        const localEntry = { ...payload, ref: result.ref, symbol: sym, status: 'pending', timestamp: new Date().toISOString() };
+        submissions.unshift(localEntry);
+        localStorage.setItem('mfa_mf_submissions', JSON.stringify(submissions));
+
+        // Show success screen
+        document.querySelectorAll('.section-header, .form-body, .submit-section, .section-gap').forEach(el => el.style.display = 'none');
+        document.getElementById('progressBar').style.display = 'none';
+        document.getElementById('stepLabel').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+        document.getElementById('refNumber').textContent = `REF: ${result.ref}`;
+
+        renderTable();
+        updateStats();
+      } else {
+        alert('Submission failed: ' + (result.error || 'Unknown error. Please try again.'));
+        btn.textContent = 'Submit for Approval →';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    } catch (err) {
+      alert('Network error. Please check your connection and try again.\n\n' + err.message);
+      btn.textContent = 'Submit for Approval →';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  }
+
+  // ── ADMIN TOGGLE ──
+  function toggleAdmin(e) {
+    e.preventDefault();
+    const panel = document.getElementById('adminPanel');
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // ── RENDER TABLE ──
+  function renderTable() {
+    const tbody = document.getElementById('submissionsBody');
+    if (!submissions.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No submissions yet. Awaiting staff entries.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = submissions.map((s, i) => `
+      <tr>
+        <td style="font-family:monospace;font-size:11px;color:var(--burgundy);font-weight:600;">${s.ref}</td>
+        <td>
+          <div style="font-weight:600;color:var(--grey-900);font-size:13px;">${s.staffName}</div>
+          <div style="font-size:11px;color:var(--grey-500);">${s.department?.split(' — ')[1] || s.department}</div>
+        </td>
+        <td>${s.vendorName}</td>
+        <td><span style="font-size:12px;">${s.category}</span></td>
+        <td style="font-weight:600;">${s.symbol}${s.amount.toFixed(2)} <span style="font-size:10px;color:var(--grey-500);">${s.currency}</span></td>
+        <td style="font-size:12px;color:var(--grey-500);">${s.purchaseDate}</td>
+        <td>
+          <span class="badge ${s.status}">
+            ${s.status === 'pending' ? '⏳' : s.status === 'approved' ? '✓' : '✕'}
+            ${s.status.charAt(0).toUpperCase() + s.status.slice(1)}
+          </span>
+        </td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-sm btn-view" onclick="viewDetail(${i})">View</button>
+            ${s.status === 'pending' ? `
+              <button class="btn-sm btn-approve" onclick="updateStatus(${i},'approved')">Approve</button>
+              <button class="btn-sm btn-reject" onclick="updateStatus(${i},'rejected')">Reject</button>
+            ` : ''}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ── UPDATE STATUS ──
+  function updateStatus(i, status) {
+    submissions[i].status = status;
+    submissions[i].reviewedAt = new Date().toISOString();
+    localStorage.setItem('mfa_mf_submissions', JSON.stringify(submissions));
+    renderTable();
+    updateStats();
+  }
+
+  // ── STATS ──
+  function updateStats() {
+    const total = submissions.length;
+    const pending = submissions.filter(s => s.status === 'pending').length;
+    const approved = submissions.filter(s => s.status === 'approved').length;
+    const totalVal = submissions.reduce((sum, s) => sum + (s.amount || 0), 0);
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statPending').textContent = pending;
+    document.getElementById('statApproved').textContent = approved;
+    document.getElementById('statAmount').textContent = `BND ${totalVal.toFixed(0)}`;
+  }
+
+  // ── VIEW MODAL ──
+  function viewDetail(i) {
+    currentModalIndex = i;
+    const s = submissions[i];
+    document.getElementById('modalTitle').textContent = `${s.ref} — Detail`;
+    document.getElementById('modalBody').innerHTML = `
+      ${row('Staff Name', s.staffName)}
+      ${row('Staff ID / Position', s.staffId)}
+      ${row('Department', s.department)}
+      ${row('Email', s.staffEmail)}
+      ${row('Approving Officer', s.approver)}
+      ${row('PO Reference', s.poRef)}
+      ${row('Purchase Date', s.purchaseDate)}
+      ${row('Vendor', s.vendorName)}
+      ${row('Category', s.category)}
+      ${row('Item Description', s.itemDesc)}
+      ${row('Amount', `${s.symbol}${s.amount?.toFixed(2)} ${s.currency}`)}
+      ${row('Payment Method', s.paymentMethod)}
+      ${row('Expected Delivery', s.deliveryDate)}
+      ${row('Receipt File', s.receipt)}
+      ${row('Notes', s.notes || '—')}
+      ${row('Status', `<span class="badge ${s.status}">${s.status.charAt(0).toUpperCase()+s.status.slice(1)}</span>`)}
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    const footer = document.querySelector('.modal-footer');
+    footer.style.display = s.status === 'pending' ? 'flex' : 'none';
+  }
+
+  function row(k, v) {
+    return `<div class="detail-row"><span class="key">${k}</span><span class="val">${v}</span></div>`;
+  }
+
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+  function approveFromModal() { updateStatus(currentModalIndex, 'approved'); closeModal(); }
+  function rejectFromModal() { updateStatus(currentModalIndex, 'rejected'); closeModal(); }
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
